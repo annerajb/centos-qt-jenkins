@@ -88,7 +88,7 @@ RUN echo "${QTSHA}  /tmp/qt/installer.run" | sha256sum -c \
     && rm -rf /tmp/qt
 
 RUN echo /opt/qt/${QTM}/gcc_64/lib > /etc/ld.so.conf.d/qt-${QTM}.conf
-RUN localedef -v -c -i en_US -f UTF-8 en_US.UTF-8
+#RUN localedef -v -c -i en_US -f UTF-8 en_US.UTF-8
 
 ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/qt/${QTM}/gcc_64/bin
 
