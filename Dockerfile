@@ -38,6 +38,7 @@ RUN echo "LC_ALL=en_US.UTF-8" >> ${JENKINS_HOME}/.bashrc
 RUN yum install --quiet  \
            git \
            subversion \
+           cmake \
            vim \
            wget \
            curl \
