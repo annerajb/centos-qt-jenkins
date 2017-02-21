@@ -66,6 +66,7 @@ RUN yum install --quiet  \
            mesa-libGL-devel \
            build-essential \
            openssh-clients \
+           java-1.8.0-openjdk.x86_64 \
            Xvfb \
            -y && yum clean all -y
 
