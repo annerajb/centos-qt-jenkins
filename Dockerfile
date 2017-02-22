@@ -76,6 +76,9 @@ RUN yum groupinstall --quiet "Development Tools" -y
 # Virtualbox
 RUN cd /etc/yum.repos.d && wget http://download.virtualbox.org/virtualbox/rpm/rhel/virtualbox.repo && yum install VirtualBox-5.1 -y
 
+# Boost
+RUN wget http://repo.enetres.net/enetres.repo -O /etc/yum.repos.d/enetres.repo && yum install boost-devel -y 
+
 # get java
 RUN wget --quiet --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u45-b14/jdk-8u45-linux-x64.tar.gz -O /opt/jdk18.tar.gz && cd /opt && tar xfz jdk18.tar.gz && ln -s /opt/jdk1.8* /opt/jdk18 && rm -rf /opt/*.tar.gz
 
