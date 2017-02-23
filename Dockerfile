@@ -76,10 +76,23 @@ RUN yum groupinstall --quiet "Development Tools" -y
 # Virtualbox
 RUN cd /etc/yum.repos.d && wget http://download.virtualbox.org/virtualbox/rpm/rhel/virtualbox.repo && yum install VirtualBox-5.1 -y
 
-# Boost
-RUN wget http://repo.enetres.net/enetres.repo -O /etc/yum.repos.d/enetres.repo && yum install boost-devel -y 
+## Boost 1.63
+RUN wget -O /boost_1_63_0.tar.bz2 -c 'http://sourceforge.net/projects/boost/files/boost/1.63.0/boost_1_63_0.tar.bz2/download' && \
+    tar xjf /boost_1_63_0.tar.bz2 && \
+    cd /boost_1_63_0/ && \
+    ./bootstrap.sh "--prefix=/opt/boost_1_63_0" && \
+    ./b2 install && \
+    rm -rf /boost_1_63_0.tar.bz2 /boost_1_63_0
 
-# get java
+# OpenDDS
+RUN wget -O /OpenDDS-3.10.tar.gz -c 'https://github.com/objectcomputing/OpenDDS/releases/download/DDS-3.10/OpenDDS-3.10.tar.gz' && \
+    tar xzf /OpenDDS-3.10.tar.gz && \
+    cd /OpenDDS-3.10/ && \
+    ./configure && \
+    make && \
+    rm -rf /OpenDDS-3.10.tar.gz
+
+# Get java
 RUN wget --quiet --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u45-b14/jdk-8u45-linux-x64.tar.gz -O /opt/jdk18.tar.gz && cd /opt && tar xfz jdk18.tar.gz && ln -s /opt/jdk1.8* /opt/jdk18 && rm -rf /opt/*.tar.gz
 
 # add java opts to .bashrc file
