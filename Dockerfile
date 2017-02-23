@@ -64,6 +64,8 @@ RUN yum install --quiet  \
            libXext \
            libXrender \
            mesa-libGL-devel \
+           python-devel \
+           python-lxml \
            build-essential \
            openssh-clients \
            java-1.8.0-openjdk.x86_64 \
