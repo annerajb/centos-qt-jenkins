@@ -1,4 +1,4 @@
-FROM centos:latest
+FROM chemaduran/centos-qt-boost-base:latest
 
 MAINTAINER Chema Durán <jgduran@gmail.com>
 
@@ -31,60 +31,7 @@ ARG group=jenkins
 ARG uid=1000
 ARG gid=1000
 
-# create data directory
-RUN mkdir -p /var/data
-
-# create user
-RUN groupadd -g ${gid} ${group} \
-    && useradd -d "$JENKINS_HOME" -u ${uid} -g ${gid} -m -s /bin/bash ${user}
-
 VOLUME /var/jenkins_home
-
-# setting up locale
-RUN echo "LC_ALL=en_US.UTF-8" >> ${JENKINS_HOME}/.bashrc
-
-# install basic tools
-RUN yum install --quiet  \
-           git \
-           subversion \
-           cmake \
-           vim \
-           wget \
-           curl \
-           tar \
-           fontconfig \
-           libSM  \
-           libICE \
-           libX11 \
-           libX11-devel \
-           libxcb \
-           libxcb-devel \
-           xcb-util \
-           xcb-util-devel \
-           libXext \
-           libXrender \
-           mesa-libGL-devel \
-           python-devel \
-           python-lxml \
-           build-essential \
-           openssh-clients \
-           java-1.8.0-openjdk.x86_64 \
-           Xvfb \
-           -y && yum clean all -y
-
-# install Development tools
-RUN yum groupinstall --quiet "Development Tools" -y
- 
-# Virtualbox
-RUN cd /etc/yum.repos.d && wget http://download.virtualbox.org/virtualbox/rpm/rhel/virtualbox.repo && yum install VirtualBox-5.1 -y
-
-## Boost 1.63
-RUN wget -O /boost_1_63_0.tar.bz2 -c 'http://sourceforge.net/projects/boost/files/boost/1.63.0/boost_1_63_0.tar.bz2/download' && \
-    tar xjf /boost_1_63_0.tar.bz2 && \
-    cd /boost_1_63_0/ && \
-    ./bootstrap.sh "--prefix=/opt/boost_1_63_0" && \
-    ./b2 install && \
-    rm -rf /boost_1_63_0.tar.bz2 /boost_1_63_0
 
 # OpenDDS
 RUN wget -O /OpenDDS-3.10.tar.gz -c 'https://github.com/objectcomputing/OpenDDS/releases/download/DDS-3.10/OpenDDS-3.10.tar.gz' && \
